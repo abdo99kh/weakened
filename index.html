@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> خلص الي عليك 💸</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in': 'fadeIn 0.4s ease-out forwards',
+                        'bounce-slight': 'bounceSlight 3s infinite ease-in-out',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        bounceSlight: {
+                            '0%, 100%': { transform: 'translateY(-2%)' },
+                            '50%': { transform: 'translateY(2%)' },
+                        },
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Cool dark mode gradient */
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-center: center;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="text-white w-full flex items-center justify-center p-4">
+
+    <!-- Main Container -->
+    <div class="max-w-md w-full glass-card rounded-3xl p-8 shadow-2xl animate-fade-in relative overflow-hidden">
+
+        <!-- Decorative glowing orbs -->
+        <div
+            class="absolute top-0 left-0 w-40 h-40 bg-purple-600 rounded-full mix-blend-screen filter blur-[50px] opacity-20 animate-bounce-slight pointer-events-none">
+        </div>
+        <div class="absolute bottom-0 right-0 w-40 h-40 bg-blue-600 rounded-full mix-blend-screen filter blur-[50px] opacity-20 animate-bounce-slight pointer-events-none"
+            style="animation-delay: 1.5s;"></div>
+
+        <div class="relative z-10 text-center">
+
+            <!-- Header -->
+            <div class="mb-8">
+                <div
+                    class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-slate-800/80 border border-slate-700/50 mb-4 shadow-inner">
+                    <i class="fa-solid fa-receipt text-3xl text-purple-400"></i>
+                </div>
+                <h1
+                    class="text-3xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400">
+                    خلص الي عليك
+                </h1>
+                <p class="text-slate-400 text-sm font-medium">منصة النيك الأسبوعي</p>
+            </div>
+
+            <!-- Search Section -->
+            <div id="search-section" class="space-y-4">
+                <div class="relative group">
+                    <div
+                        class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-purple-400 text-slate-500">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <input type="tel" id="phone-input"
+                        class="w-full bg-slate-800/60 border border-slate-700 text-white rounded-xl py-3.5 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all placeholder-slate-500 text-lg font-medium shadow-inner"
+                        placeholder="...أكتب رقم تليفونك يا غزال" autocomplete="off">
+                </div>
+                <button onclick="checkDebt()" id="search-btn"
+                    class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg transform transition-all active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:ring-offset-2 focus:ring-offset-slate-900 group">
+                    <i class="fas fa-search mr-2 group-hover:rotate-12 transition-transform"></i> رص باش تعرف قداش نيكتك
+                </button>
+            </div>
+
+            <!-- Result Section (Hidden by default) -->
+            <div id="result-section" class="hidden mt-8">
+
+                <!-- Victim State (Owes Money) -->
+                <div id="debt-card"
+                    class="hidden animate-fade-in bg-slate-800/80 rounded-2xl p-6 border border-red-500/30 relative overflow-hidden shadow-lg">
+                    <div class="absolute top-4 right-4 text-red-400 opacity-20">
+                        <i class="fa-solid fa-hand-holding-dollar text-6xl"></i>
+                    </div>
+
+                    <div class="relative z-10 text-left">
+                        <span
+                            class="inline-block px-3 py-1 bg-red-500/20 text-red-400 text-xs font-bold rounded-full border border-red-500/30 mb-3 tracking-wider uppercase">
+                            طربقت عليك
+                        </span>
+
+                        <h2 class="text-2xl font-bold mb-1 text-white" id="victim-name">Name</h2>
+                        <p class="text-slate-400 text-sm mb-4">جاتك ف الريش الاسبوع هادا هي فقص وادفع الرقم الي لوطا</p>
+
+                        <div class="text-4xl font-extrabold text-red-400 mb-6 font-mono tracking-tight"
+                            id="debt-amount">
+                            $0.00
+                        </div>
+
+                        <button onclick="copyBankDetails()" id="copy-btn"
+                            class="w-full bg-slate-700/80 hover:bg-slate-600 text-white font-semibold py-3 px-4 rounded-xl transition-all flex items-center justify-center group border border-slate-600/50">
+                            <i class="fas fa-copy mr-2 group-hover:scale-110 transition-transform text-slate-300"></i>
+                            <span id="copy-text">Copy Bank Details</span>
+                        </button>
+
+                        <button onclick="resetSearch()"
+                            class="w-full mt-3 py-2 text-sm text-slate-400 hover:text-white transition-colors">
+                            أرجع للصفحة الرئيسية
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Safe State (No Debt) -->
+                <div id="safe-card"
+                    class="hidden animate-fade-in bg-slate-800/80 rounded-2xl p-6 border border-emerald-500/30 relative overflow-hidden shadow-lg">
+                    <div class="absolute top-4 right-4 text-emerald-400 opacity-10">
+                        <i class="fa-solid fa-dove text-6xl"></i>
+                    </div>
+
+                    <div class="relative z-10">
+                        <div class="text-6xl mb-4 transform hover:scale-110 transition-transform cursor-default">🎉
+                        </div>
+                        <h2 class="text-2xl font-bold text-emerald-400 mb-2">! كتحت منها يا بغل</h2>
+                        <p class="text-slate-300 mb-6 text-sm leading-relaxed">رقمك مش مسجل الأسبوع هادا الأسبوع الجاي
+                            لما انيكك</p>
+
+                        <button onclick="resetSearch()"
+                            class="bg-slate-700/50 hover:bg-slate-700 text-white font-medium py-2 px-6 rounded-lg transition-colors border border-slate-600/50 text-sm">
+                            Check another number
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // =====================================================================
+        // ⚙️ CUSTOMIZATION SECTION - EDIT YOUR FRIENDS' DATA HERE
+        // =====================================================================
+
+        // Mock database mapping phone numbers to victim details.
+        // Format: 'PhoneNumber': { name: 'Friend Name', amount: DebtAmount }
+        // Note: Keep phone numbers as strings.
+        const victimsDatabase = {
+            '0915093389': { name: 'عبد الرحمن التاجوري', amount: 86.7 },
+            '0945093389': { name: 'عبد الرحمن التاجوري', amount: 86.7 },
+            '0916350699': { name: 'مهند الناجح', amount: 86.7 },
+            '0919333397': { name: 'طلال تنتوش', amount: 89.7 },
+
+            // '1112223333': { name: 'Alice', amount: 5.99 },
+            // Add your own friends below:
+            // '1231231234': { name: 'Tom', amount: 25.00 }
+        };
+
+        // The text that will be copied to clipboard when they click the copy button
+        const bankInfoToCopy = "LY40024006010097059020601";
+
+        // =====================================================================
+        // 🚀 APP LOGIC - NO NEED TO TOUCH BELOW
+        // =====================================================================
+
+        function checkDebt() {
+            const phoneInputEl = document.getElementById('phone-input');
+            const phoneInput = phoneInputEl.value.trim();
+            const resultSection = document.getElementById('result-section');
+            const debtCard = document.getElementById('debt-card');
+            const safeCard = document.getElementById('safe-card');
+            const searchSection = document.getElementById('search-section');
+
+            // Simple validation
+            if (!phoneInput) {
+                // Trigger shake animation
+                phoneInputEl.classList.remove('animate-shake');
+                void phoneInputEl.offsetWidth; // trigger reflow
+                phoneInputEl.classList.add('animate-shake');
+                phoneInputEl.classList.add('border-red-500/50', 'ring-1', 'ring-red-500/50');
+
+                setTimeout(() => {
+                    phoneInputEl.classList.remove('border-red-500/50', 'ring-1', 'ring-red-500/50');
+                }, 500);
+                return;
+            }
+
+            // Hide search section, show result section
+            searchSection.classList.add('hidden');
+            resultSection.classList.remove('hidden');
+
+            // Reset cards visibility to re-trigger fade-in
+            debtCard.classList.add('hidden');
+            safeCard.classList.add('hidden');
+
+            // Reset copy button state
+            const copyBtn = document.getElementById('copy-btn');
+            document.getElementById('copy-text').innerText = "(iban أنسخ)باش ما تقولش ما عنديش ";
+            copyBtn.classList.remove('bg-emerald-600/80', 'hover:bg-emerald-500/80', 'border-emerald-500/50');
+            copyBtn.classList.add('bg-slate-700/80', 'hover:bg-slate-600', 'border-slate-600/50');
+
+            // Check if phone number exists in our database
+            if (victimsDatabase.hasOwnProperty(phoneInput)) {
+                // They owe money!
+                const victim = victimsDatabase[phoneInput];
+                document.getElementById('victim-name').innerText = victim.name;
+                document.getElementById('debt-amount').innerText = `$${victim.amount.toFixed(2)}`;
+                debtCard.classList.remove('hidden');
+            } else {
+                // They are safe
+                safeCard.classList.remove('hidden');
+            }
+        }
+
+        function copyBankDetails() {
+            navigator.clipboard.writeText(bankInfoToCopy).then(() => {
+                const copyText = document.getElementById('copy-text');
+                const copyBtn = document.getElementById('copy-btn');
+
+                // Visual success feedback
+                copyText.innerText = "Copied! Pay up. 🤑";
+                copyBtn.classList.remove('bg-slate-700/80', 'hover:bg-slate-600', 'border-slate-600/50');
+                copyBtn.classList.add('bg-emerald-600/80', 'hover:bg-emerald-500/80', 'border-emerald-500/50');
+
+                // Revert button state after 3 seconds
+                setTimeout(() => {
+                    copyText.innerText = "Copy Bank Details";
+                    copyBtn.classList.remove('bg-emerald-600/80', 'hover:bg-emerald-500/80', 'border-emerald-500/50');
+                    copyBtn.classList.add('bg-slate-700/80', 'hover:bg-slate-600', 'border-slate-600/50');
+                }, 3000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                alert("Couldn't copy to clipboard! But you still owe me.");
+            });
+        }
+
+        function resetSearch() {
+            document.getElementById('phone-input').value = '';
+            document.getElementById('result-section').classList.add('hidden');
+            document.getElementById('search-section').classList.remove('hidden');
+            // Small delay to allow display change before focusing
+            setTimeout(() => {
+                document.getElementById('phone-input').focus();
+            }, 50);
+        }
+
+        // Allow pressing Enter to search
+        document.getElementById('phone-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkDebt();
+            }
+        });
+    </script>
+</body>
+
+</html>
